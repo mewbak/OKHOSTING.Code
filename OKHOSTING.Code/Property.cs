@@ -10,31 +10,7 @@ namespace OKHOSTING.Code
 			get; set;
 		}
 
-		public System.Guid? GetMethodId { get; set; }
-
 		public virtual Method SetMethod
-		{
-			get; set;
-		}
-
-		public System.Guid? SetMethodId { get; set; }
-
-		public bool Key
-		{
-			get; set;
-		}
-
-		public bool Required
-		{
-			get; set;
-		}
-		
-		public object MinValue
-		{
-			get; set;
-		}
-
-		public object MaxValue
 		{
 			get; set;
 		}
