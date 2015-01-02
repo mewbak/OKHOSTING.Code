@@ -30,7 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.StringTemplate">
+      <HintPath>..\packages\Antlr4.StringTemplate.4.0.6.9004\lib\net35\Antlr4.StringTemplate.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.Decompiler">
+      <HintPath>..\References\ICSharpCode.Decompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="ILSpy">
+      <HintPath>..\References\ILSpy.exe</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\References\Mono.Cecil.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,7 +52,86 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessModifier.cs" />
+    <Compile Include="Array.cs" />
+    <Compile Include="Class.cs" />
+    <Compile Include="Decompiler.cs" />
+    <Compile Include="Delegate.cs" />
+    <Compile Include="Enumeration.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="Field.cs" />
+    <Compile Include="Interface.cs" />
+    <Compile Include="Member.cs" />
+    <Compile Include="MemberAttribute.cs" />
+    <Compile Include="MemberSubClass.cs" />
+    <Compile Include="MemberTypes.cs" />
+    <Compile Include="Method.cs" />
+    <Compile Include="MethodArgument.cs" />
+    <Compile Include="MethodGenericArgument.cs" />
+    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property.cs" />
+    <Compile Include="RunTime\Assignment.cs" />
+    <Compile Include="RunTime\EventRaise.cs" />
+    <Compile Include="RunTime\FieldRead.cs" />
+    <Compile Include="RunTime\FieldWrite.cs" />
+    <Compile Include="RunTime\Instance.cs" />
+    <Compile Include="RunTime\MethodCall.cs" />
+    <Compile Include="RunTime\PropertyRead.cs" />
+    <Compile Include="RunTime\PropertyWrite.cs" />
+    <Compile Include="RunTime\Read.cs" />
+    <Compile Include="RunTime\Task.cs" />
+    <Compile Include="RunTime\Write.cs" />
+    <Compile Include="StringProperty.cs" />
+    <Compile Include="Struct.cs" />
+    <Compile Include="Templates\GenericMemberTemplate.cs" />
+    <Compile Include="Templates\GenericModuleTemplate.cs" />
+    <Compile Include="Templates\GenericTypeTemplate.cs" />
+    <Compile Include="Templates\ITemplatable.cs" />
+    <Compile Include="Templates\Language.cs" />
+    <Compile Include="Templates\LanguageGroup.cs" />
+    <Compile Include="Templates\LanguageGroupMember.cs" />
+    <Compile Include="Templates\LowerCaseRenderer.cs" />
+    <Compile Include="Templates\SpecificMemberTemplate.cs" />
+    <Compile Include="Templates\SpecificModuleTemplate.cs" />
+    <Compile Include="Templates\SpecificTypeTemplate.cs" />
+    <Compile Include="Templates\Template.cs" />
+    <Compile Include="Type.cs" />
+    <Compile Include="TypeAttribute.cs" />
+    <Compile Include="TypeGenericArgument.cs" />
+    <Compile Include="TypeSubClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\OKHOSTING.Tools\OKHOSTING.Tools.csproj">
+      <Project>{fc1b2d37-6a08-4fce-aaf7-73512262a9d1}</Project>
+      <Name>OKHOSTING.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Templates\Samples\CSharp\Class.template" />
+    <None Include="Templates\Samples\CSharp\Entity Framework\Property.template" />
+    <None Include="Templates\Samples\CSharp\Enumeration.template" />
+    <None Include="Templates\Samples\CSharp\Event.template" />
+    <None Include="Templates\Samples\CSharp\Field.template" />
+    <None Include="Templates\Samples\CSharp\Interface.template" />
+    <None Include="Templates\Samples\CSharp\Method.template" />
+    <None Include="Templates\Samples\CSharp\Module.template" />
+    <None Include="Templates\Samples\CSharp\Property.template" />
+    <None Include="Templates\Samples\CSharp\Struct.template" />
+    <None Include="Templates\Samples\SQL\Class.Create.template" />
+    <None Include="Templates\Samples\SQL\MySql\Create Table\Class.template" />
+    <None Include="Templates\Samples\SQL\MySql\Create Table\Field.template" />
+    <None Include="Templates\Samples\SQL\MySql\Create Table\Property.template" />
+    <None Include="Templates\Samples\SQL\MySql\Create Table\Struct.template" />
+    <None Include="Templates\Samples\SQL\Property.Create.template" />
+    <None Include="Templates\Samples\SQL\System.Boolean.template" />
+    <None Include="Templates\Samples\SQL\System.DateTime.template" />
+    <None Include="Templates\Samples\SQL\System.Int32.template" />
+    <None Include="Templates\Samples\SQL\System.String.template" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Templates\Samples\ASP.NET WebForms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

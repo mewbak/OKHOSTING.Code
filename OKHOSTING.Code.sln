@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKHOSTING.Code", "OKHOSTING.Code\OKHOSTING.Code.csproj", "{CE51C890-6B6F-45DA-9146-1F9CF897F00E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKHOSTING.Tools", "..\OKHOSTING.Tools\OKHOSTING.Tools.csproj", "{FC1B2D37-6A08-4FCE-AAF7-73512262A9D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{CE51C890-6B6F-45DA-9146-1F9CF897F00E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE51C890-6B6F-45DA-9146-1F9CF897F00E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE51C890-6B6F-45DA-9146-1F9CF897F00E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1B2D37-6A08-4FCE-AAF7-73512262A9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1B2D37-6A08-4FCE-AAF7-73512262A9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1B2D37-6A08-4FCE-AAF7-73512262A9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1B2D37-6A08-4FCE-AAF7-73512262A9D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

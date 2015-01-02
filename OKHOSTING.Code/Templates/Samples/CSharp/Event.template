@@ -1,0 +1,2 @@
+<<Event.Attributes: { att | [<<att.Attribute.Type.NameResult>>] }; separator="\n">>
+<<Event.Access>> <<if(Event.IsStatic)>> static <<endif>> event <<Event.Delegate.NameResult>> <<Event.Name>>;

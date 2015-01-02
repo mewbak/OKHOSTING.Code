@@ -1,0 +1,16 @@
+namespace <<Class.NameSpace>>
+{
+	<<Class.Attributes: { att | [<<att.Attribute.Type.NameResult>>] }; separator="\n">>
+	<<Class.Access>><<if(Class.IsAbstract)>> abstract<<endif>><<if(Class.IsSealed)>> sealed<<endif>> class <<Class.Name>><<if(Class.Parent || Class.ImplementedInterfaces)>>: <<endif>><<if(Class.Parent)>><<Class.Parent.NameResult>><<if(Class.ImplementedInterfaces)>>, <<endif>><<endif>><<Class.ImplementedInterfaces: { ii | <<ii.NameResult>> }; separator=", ">>
+	{
+		<<Class.Events: { m | <<m.ContentResult>> }; separator="\n">>
+		
+		<<Class.Fields: { m | <<m.ContentResult>> }; separator="\n">>
+		
+		<<Class.Properties: { m | <<m.ContentResult>> }; separator="\n">>
+		
+		<<Class.Methods: { m | <<m.ContentResult>> }; separator="\n">>
+
+		<<Class.SubTypes: { st | <<st.ContentResult>> }; separator="\n">>
+	}
+}

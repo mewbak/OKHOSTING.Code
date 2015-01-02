@@ -1,0 +1,2 @@
+<<Field.Attributes: { att | [<<att.Attribute.Type.NameResult>>] }; separator="\n">>
+<<Field.Access>><<if(Field.IsStatic)>> static<<endif>><<if(Field.IsLiteral)>> constant<<endif>><<if(Field.IsInitOnly)>> readonly<<endif>> <<Field.ReturnType.NameResult>> <<Field.Name>><<if(Field.LiteralValue)>> = <<Field.LiteralValue>> <<endif>>;

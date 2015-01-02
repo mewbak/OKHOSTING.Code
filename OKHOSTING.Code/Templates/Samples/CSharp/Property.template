@@ -1,0 +1,25 @@
+<<Property.Attributes: {att | [<<att.Attribute.Type.NameResult>>] }; separator="\n">>
+<<if(Property.Key)>>[System.ComponentModel.DataAnnotations.Key, System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]<<endif>>
+<<if(Property.Required)>>[System.ComponentModel.DataAnnotations.Required]<<endif>>
+<<Property.Access>><<if(Property.IsStatic)>> static<<endif>><<if(Property.IsAbstract)>> abstract<<endif>> <<if(Property.IsList)>>System.Collections.Generic.List< <<Property.ReturnType.ElementType.NameResult>> ><<else>><<Property.ReturnType.NameResult>><<endif>> <<Property.NameResult>>
+{
+	<<if(Property.GetMethod)>>
+	<<Property.GetMethod.Access>> get<<if(!Property.IsPersistent && Property.GetMethod.MethodBodyCode)>>
+	{
+		<<Property.GetMethod.MethodBodyCode>>
+	}
+		<<else>>
+	;
+		<<endif>>
+	<<endif>>
+	
+	<<if(Property.SetMethod)>>
+	<<Property.GetMethod.Access>> set<<if(!Property.IsPersistent && Property.SetMethod.MethodBodyCode)>>
+	{
+		<<Property.SetMethod.MethodBodyCode>>
+	}
+		<<else>>
+	;
+		<<endif>>
+	<<endif>>
+}
