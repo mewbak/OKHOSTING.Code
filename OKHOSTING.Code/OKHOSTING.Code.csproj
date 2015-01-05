@@ -82,7 +82,6 @@
     <Compile Include="RunTime\Read.cs" />
     <Compile Include="RunTime\Task.cs" />
     <Compile Include="RunTime\Write.cs" />
-    <Compile Include="StringProperty.cs" />
     <Compile Include="Struct.cs" />
     <Compile Include="Templates\GenericMemberTemplate.cs" />
     <Compile Include="Templates\GenericModuleTemplate.cs" />
@@ -102,6 +101,10 @@
     <Compile Include="TypeSubClass.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\OKHOSTING.Data\OKHOSTING.Data\OKHOSTING.Data.csproj">
+      <Project>{92920dc2-b334-4616-9bbc-883eded14e44}</Project>
+      <Name>OKHOSTING.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\OKHOSTING.Tools\OKHOSTING.Tools.csproj">
       <Project>{fc1b2d37-6a08-4fce-aaf7-73512262a9d1}</Project>
       <Name>OKHOSTING.Tools</Name>
