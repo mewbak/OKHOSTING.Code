@@ -14,7 +14,7 @@ namespace OKHOSTING.Code
 		}
 
 		[Required]
-		public virtual Type AppliedTo
+		public Type AppliedTo
 		{
 			get;
 			set;
@@ -23,7 +23,7 @@ namespace OKHOSTING.Code
 		public Guid AppliedToId { get; set; }
 
 		[Required]
-		public virtual OKHOSTING.Code.RunTime.Instance Attribute
+		public OKHOSTING.Code.RunTime.Instance Attribute
 		{
 			get;
 			set;

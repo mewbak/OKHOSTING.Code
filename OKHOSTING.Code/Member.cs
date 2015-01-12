@@ -1,4 +1,4 @@
-﻿using OKHOSTING.Code.Templates;
+﻿using OKHOSTING.Code.Generation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,14 +31,12 @@ namespace OKHOSTING.Code
 		/// Class that contains this member
 		/// </summary>
 		[Required]
-		public virtual Type Type
+		public Type Type
 		{
 			get; set;
 		}
 
 		[InverseProperty("Members")]
-		public System.Guid? TypeId { get; set; }
-
 		[Required]
 		public AccessModifier Access
 		{
@@ -57,16 +55,14 @@ namespace OKHOSTING.Code
 			get; set;
 		}
 
-		public virtual Type ReturnType
+		public Type ReturnType
 		{
 			get; set;
 		}
 
-		public System.Guid? ReturnTypeId { get; set; }
-
 		//read only 
 
-		public virtual string FullName
+		public string FullName
 		{
 			get
 			{
@@ -102,12 +98,12 @@ namespace OKHOSTING.Code
 
 		#region collections
 
-		public virtual List<MemberAttribute> Attributes
+		public List<MemberAttribute> Attributes
 		{
 			get; set;
 		}
 
-		public virtual List<SpecificMemberTemplate> SpecificMemberTemplates
+		public List<SpecificMemberTemplate> SpecificMemberTemplates
 		{
 			get; set;
 		}
@@ -117,7 +113,7 @@ namespace OKHOSTING.Code
 		#region itemplatable
 
 		[Browsable(false)]
-		public virtual string NameResult
+		public string NameResult
 		{
 			get
 			{
@@ -126,7 +122,7 @@ namespace OKHOSTING.Code
 		}
 
 		[Browsable(false)]
-		public virtual string ContentResult
+		public string ContentResult
 		{
 			get
 			{
@@ -135,7 +131,7 @@ namespace OKHOSTING.Code
 		}
 
 		[Browsable(false)]
-		public virtual string FilePathResult
+		public string FilePathResult
 		{
 			get
 			{

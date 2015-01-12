@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	[System.ComponentModel.DefaultProperty("FullName")]
 	public class Language 
@@ -24,12 +24,10 @@ namespace OKHOSTING.Code.Templates
 			get; set;
 		}
 
-		public virtual Language Parent
+		public Language Parent
 		{
 			get; set;
 		}
-
-		public System.Guid? ParentId { get; set; }
 
 		public string DelimiterStart
 		{
@@ -61,17 +59,17 @@ namespace OKHOSTING.Code.Templates
 			}
 		}
 
-		public virtual List<Language> SubLanguages
+		public List<Language> SubLanguages
 		{
 			get; set;
 		}
 
-		public virtual List<Template> Templates
+		public List<Template> Templates
 		{
 			get; set;
 		}
 
-		public virtual List<LanguageGroupMember> Groups
+		public List<LanguageGroupMember> Groups
 		{
 			get; set;
 		}

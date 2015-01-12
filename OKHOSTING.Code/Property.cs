@@ -5,12 +5,12 @@ namespace OKHOSTING.Code
 	[Table("Property")]
 	public class Property : Member
 	{
-		public virtual Method GetMethod
+		public Method GetMethod
 		{
 			get; set;
 		}
 
-		public virtual Method SetMethod
+		public Method SetMethod
 		{
 			get; set;
 		}

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	[Table("SpecificTypeTemplate")]
 	public class SpecificTypeTemplate : Template
@@ -10,12 +10,10 @@ namespace OKHOSTING.Code.Templates
 		/// This template will only be used for this specific type
 		/// </summary>
 		[Required]
-		public virtual Type Type
+		public Type Type
 		{
 			get; set;
 		}
-
-		public System.Guid? TypeId { get; set; }
 
 		public override string FullName
 		{

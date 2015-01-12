@@ -29,9 +29,6 @@ namespace OKHOSTING.Code.RunTime
 			get; set;
 		}
 
-		public System.Guid? MemberId { get; set; }
-		public System.Guid? TypeId { get; set; }
-
 		public string Name
 		{
 			get; set;

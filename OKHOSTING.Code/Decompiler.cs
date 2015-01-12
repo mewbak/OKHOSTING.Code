@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using OKHOSTING.Tools.Extensions;
-using OKHOSTING.Code.Templates;
+using OKHOSTING.Code.Generation;
 
 namespace OKHOSTING.Code
 {
@@ -234,7 +234,7 @@ namespace OKHOSTING.Code
 			//lg.Name = "EntityFramework";
 			//LanguageGroupMember lgm = new LanguageGroupMember();
 			//lgm.Group = lg;
-			//lgm.Language = (from lang in DataBase.Current.Set<OKHOSTING.Code.Templates.Language>() where lang.Name == "CSharp" select lang).FirstOrDefault<Templates.Language>();
+			//lgm.Language = (from lang in DataBase.Current.Set<OKHOSTING.Code.Generation.Language>() where lang.Name == "CSharp" select lang).FirstOrDefault<Templates.Language>();
 			//DataBase.Current.Set<LanguageGroup>().Add(lg);
 			//DataBase.Current.Set<LanguageGroupMember>().Add(lgm);
 			//DataBase.Current.SaveChanges();

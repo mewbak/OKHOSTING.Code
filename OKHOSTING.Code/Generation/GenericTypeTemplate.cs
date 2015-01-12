@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	[Table("GenericTypeTemplate")]
 	public class GenericTypeTemplate : Template

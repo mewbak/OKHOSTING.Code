@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	public class LowerCaseRenderer: Antlr4.StringTemplate.IAttributeRenderer
 	{

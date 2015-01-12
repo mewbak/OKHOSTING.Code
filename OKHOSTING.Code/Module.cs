@@ -1,4 +1,4 @@
-﻿using OKHOSTING.Code.Templates;
+﻿using OKHOSTING.Code.Generation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -43,22 +43,22 @@ namespace OKHOSTING.Code
 			get; set;
 		}
 
-		public virtual List<Module> References
+		public List<Module> References
 		{
 			get; set;
 		}
 
-		public virtual List<Module> ReferencedBy
+		public List<Module> ReferencedBy
 		{
 			get; set;
 		}
 
-		public virtual List<Type> Types
+		public List<Type> Types
 		{
 			get; set;
 		}
 
-		public virtual List<SpecificModuleTemplate> SpecificModuleTemplates
+		public List<SpecificModuleTemplate> SpecificModuleTemplates
 		{
 			get; set;
 		}

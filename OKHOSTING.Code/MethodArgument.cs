@@ -24,20 +24,16 @@ namespace OKHOSTING.Code
 		}
 
 		[Required]
-		public virtual Type Type
+		public Type Type
 		{
 			get; set;
 		}
-
-		public System.Guid? TypeId { get; set; }
 
 		[Required]
-		public virtual Method Method
+		public Method Method
 		{
 			get; set;
 		}
-
-		public System.Guid? MethodId { get; set; }
 
 		public MethodArgument()
 		{

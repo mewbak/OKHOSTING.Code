@@ -120,12 +120,12 @@ namespace OKHOSTING.Code
 			}
 		}
 
-		public virtual List<MethodArgument> Arguments
+		public List<MethodArgument> Arguments
 		{
 			get; set;
 		}
 
-		public virtual List<MethodGenericArgument> GenericArguments
+		public List<MethodGenericArgument> GenericArguments
 		{
 			get; set;
 		}

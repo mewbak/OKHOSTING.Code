@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	public interface ITemplatable
 	{

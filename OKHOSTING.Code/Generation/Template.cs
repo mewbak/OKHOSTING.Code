@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	[DefaultProperty("FullName")]
 	public abstract class Template 
@@ -17,7 +17,7 @@ namespace OKHOSTING.Code.Templates
 		}
 
 		[Required]
-		public virtual Language Language
+		public Language Language
 		{
 			get; set;
 		}
@@ -40,7 +40,7 @@ namespace OKHOSTING.Code.Templates
 			get; set;
 		}
 
-		public virtual string FullName
+		public string FullName
 		{
 			get
 			{

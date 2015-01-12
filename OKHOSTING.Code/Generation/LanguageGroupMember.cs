@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	public class LanguageGroupMember 
 	{
@@ -16,7 +16,7 @@ namespace OKHOSTING.Code.Templates
 			set;
 		}
 
-		public virtual Language Language
+		public Language Language
 		{
 			get;
 			set;
@@ -24,7 +24,7 @@ namespace OKHOSTING.Code.Templates
 
 		public Guid LanguageId { get; set; }
 
-		public virtual LanguageGroup Group
+		public LanguageGroup Group
 		{
 			get;
 			set;

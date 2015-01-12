@@ -14,12 +14,10 @@ namespace OKHOSTING.Code
 		/// <summary>
 		/// Support for inhetitance
 		/// </summary>
-		public virtual Class Parent
+		public Class Parent
 		{
 			get; set;
 		}
-
-		public System.Guid? ParentId { get; set; }
 
 		public bool IsAbstract
 		{
@@ -51,7 +49,7 @@ namespace OKHOSTING.Code
 		/// Classes that inherit from this class
 		/// </summary>
 
-		public virtual List<Class> ParentOf
+		public List<Class> ParentOf
 		{
 			get; set;
 		}
@@ -60,12 +58,12 @@ namespace OKHOSTING.Code
 		/// Types defined inside this class
 		/// </summary>
 
-		public virtual List<Type> SubTypes
+		public List<Type> SubTypes
 		{
 			get; set;
 		}
 
-		public virtual List<Interface> ImplementedInterfaces
+		public List<Interface> ImplementedInterfaces
 		{
 			get; set;
 		}
@@ -169,7 +167,7 @@ namespace OKHOSTING.Code
 			}
 		}
 
-		public virtual IQueryable<Property> ExternalForeignKeys
+		public IQueryable<Property> ExternalForeignKeys
 		{
 			get 
 			{

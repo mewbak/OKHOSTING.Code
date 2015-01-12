@@ -6,13 +6,11 @@ namespace OKHOSTING.Code
 	[Table("Enumeration")]
 	public class Enumeration : Type
 	{
-		public virtual Type UnderlyingType
+		public Type UnderlyingType
 		{
 			get;
 			set;
 		}
-
-		public System.Guid? UnderlyingTypeId { get; set; }
 
 		//public override MemberTypes SupportedMemberTypes
 		//{

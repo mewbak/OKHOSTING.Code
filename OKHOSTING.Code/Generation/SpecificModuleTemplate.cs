@@ -1,31 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
-	[Table("SpecificMemberTemplate")]
-	public class SpecificMemberTemplate : Template
+	[Table("SpecificModuleTemplate")]
+	public class SpecificModuleTemplate : Template
 	{
 		/// <summary>
 		/// This template will only be used for this specific member
 		/// </summary>
 		[Required]
-		public virtual Member Member
+		public Module Module
 		{
 			get; set;
 		}
-
-		public System.Guid? MemberId { get; set; }
 
 		public override string FullName
 		{
 			get
 			{
-				return base.FullName + "[Member=" + Member + "]";
+				return base.FullName + "[Module=" + Module + "]";
 			}
 		}
 
-		public SpecificMemberTemplate()
+		public SpecificModuleTemplate()
 		{
 		}
 	}

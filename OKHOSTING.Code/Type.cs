@@ -1,4 +1,4 @@
-﻿using OKHOSTING.Code.Templates;
+﻿using OKHOSTING.Code.Generation;
 using System;
 using System.Linq;
 using System.Text;
@@ -46,19 +46,15 @@ namespace OKHOSTING.Code
 		/// Support for subtype definitions
 		/// </summary>
 
-		public virtual Class Container
+		public Class Container
 		{
 			get; set;
 		}
 
-		public Guid? ContainerId { get; set; }
-
-		public virtual Module Module
+		public Module Module
 		{
 			get; set;
 		}
-
-		public Guid? ModuleId { get; set; }
 
 		[StringLength(250)]
 		public string Notes
@@ -147,7 +143,7 @@ namespace OKHOSTING.Code
 		//	get;
 		//}
 
-		public virtual string FullName
+		public string FullName
 		{
 			get
 			{
@@ -195,23 +191,23 @@ namespace OKHOSTING.Code
 		#region collections
 
 		[InverseProperty("Type")]
-		public virtual List<Member> Members
+		public List<Member> Members
 		{
 			get; set;
 		}
 
-		public virtual List<TypeAttribute> Attributes
+		public List<TypeAttribute> Attributes
 		{
 			get; set;
 		}
 
 		[InverseProperty("AppliedTo")]
-		public virtual List<TypeGenericArgument> GenericArguments
+		public List<TypeGenericArgument> GenericArguments
 		{
 			get; set; //TODO: sort by position
 		}
 
-		public virtual List<SpecificTypeTemplate> SpecificTypeTemplates
+		public List<SpecificTypeTemplate> SpecificTypeTemplates
 		{
 			get; set;
 		}
@@ -221,7 +217,7 @@ namespace OKHOSTING.Code
 		#region ITemplatable
 
 		[System.ComponentModel.Browsable(false)]
-		public virtual string NameResult
+		public string NameResult
 		{
 			get
 			{
@@ -230,7 +226,7 @@ namespace OKHOSTING.Code
 		}
 
 		[System.ComponentModel.Browsable(false)]
-		public virtual string ContentResult
+		public string ContentResult
 		{
 			get
 			{
@@ -239,7 +235,7 @@ namespace OKHOSTING.Code
 		}
 
 		[System.ComponentModel.Browsable(false)]
-		public virtual string FilePathResult
+		public string FilePathResult
 		{
 			get
 			{

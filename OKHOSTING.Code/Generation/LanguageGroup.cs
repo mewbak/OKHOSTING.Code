@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	[DefaultProperty("Name")]
 	public class LanguageGroup 
@@ -26,7 +26,7 @@ namespace OKHOSTING.Code.Templates
 			get; set;
 		}
 
-		public virtual List<LanguageGroupMember> Languages
+		public List<LanguageGroupMember> Languages
 		{
 			get; set;
 		}

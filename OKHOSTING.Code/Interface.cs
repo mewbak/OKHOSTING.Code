@@ -59,17 +59,17 @@ namespace OKHOSTING.Code
 			}
 		}
 
-		public virtual List<Class> ImplementedBy
+		public List<Class> ImplementedBy
 		{
 			get; set;
 		}
 
-		public virtual List<Interface> Requires
+		public List<Interface> Requires
 		{
 			get; set;
 		}
 
-		public virtual List<Interface> RequiredBy
+		public List<Interface> RequiredBy
 		{
 			get; set;
 		}

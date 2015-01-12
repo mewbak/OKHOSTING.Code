@@ -81,18 +81,18 @@
     <Compile Include="RunTime\Task.cs" />
     <Compile Include="RunTime\Write.cs" />
     <Compile Include="Struct.cs" />
-    <Compile Include="Templates\GenericMemberTemplate.cs" />
-    <Compile Include="Templates\GenericModuleTemplate.cs" />
-    <Compile Include="Templates\GenericTypeTemplate.cs" />
-    <Compile Include="Templates\ITemplatable.cs" />
-    <Compile Include="Templates\Language.cs" />
-    <Compile Include="Templates\LanguageGroup.cs" />
-    <Compile Include="Templates\LanguageGroupMember.cs" />
-    <Compile Include="Templates\LowerCaseRenderer.cs" />
-    <Compile Include="Templates\SpecificMemberTemplate.cs" />
-    <Compile Include="Templates\SpecificModuleTemplate.cs" />
-    <Compile Include="Templates\SpecificTypeTemplate.cs" />
-    <Compile Include="Templates\Template.cs" />
+    <Compile Include="Generation\GenericMemberTemplate.cs" />
+    <Compile Include="Generation\GenericModuleTemplate.cs" />
+    <Compile Include="Generation\GenericTypeTemplate.cs" />
+    <Compile Include="Generation\ITemplatable.cs" />
+    <Compile Include="Generation\Language.cs" />
+    <Compile Include="Generation\LanguageGroup.cs" />
+    <Compile Include="Generation\LanguageGroupMember.cs" />
+    <Compile Include="Generation\LowerCaseRenderer.cs" />
+    <Compile Include="Generation\SpecificMemberTemplate.cs" />
+    <Compile Include="Generation\SpecificModuleTemplate.cs" />
+    <Compile Include="Generation\SpecificTypeTemplate.cs" />
+    <Compile Include="Generation\Template.cs" />
     <Compile Include="Type.cs" />
     <Compile Include="TypeAttribute.cs" />
     <Compile Include="TypeGenericArgument.cs" />
@@ -110,29 +110,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Templates\Samples\CSharp\Class.template" />
-    <None Include="Templates\Samples\CSharp\Entity Framework\Property.template" />
-    <None Include="Templates\Samples\CSharp\Enumeration.template" />
-    <None Include="Templates\Samples\CSharp\Event.template" />
-    <None Include="Templates\Samples\CSharp\Field.template" />
-    <None Include="Templates\Samples\CSharp\Interface.template" />
-    <None Include="Templates\Samples\CSharp\Method.template" />
-    <None Include="Templates\Samples\CSharp\Module.template" />
-    <None Include="Templates\Samples\CSharp\Property.template" />
-    <None Include="Templates\Samples\CSharp\Struct.template" />
-    <None Include="Templates\Samples\SQL\Class.Create.template" />
-    <None Include="Templates\Samples\SQL\MySql\Create Table\Class.template" />
-    <None Include="Templates\Samples\SQL\MySql\Create Table\Field.template" />
-    <None Include="Templates\Samples\SQL\MySql\Create Table\Property.template" />
-    <None Include="Templates\Samples\SQL\MySql\Create Table\Struct.template" />
-    <None Include="Templates\Samples\SQL\Property.Create.template" />
-    <None Include="Templates\Samples\SQL\System.Boolean.template" />
-    <None Include="Templates\Samples\SQL\System.DateTime.template" />
-    <None Include="Templates\Samples\SQL\System.Int32.template" />
-    <None Include="Templates\Samples\SQL\System.String.template" />
+    <None Include="Generation\Samples\CSharp\Class.template" />
+    <None Include="Generation\Samples\CSharp\Entity Framework\Property.template" />
+    <None Include="Generation\Samples\CSharp\Enumeration.template" />
+    <None Include="Generation\Samples\CSharp\Event.template" />
+    <None Include="Generation\Samples\CSharp\Field.template" />
+    <None Include="Generation\Samples\CSharp\Interface.template" />
+    <None Include="Generation\Samples\CSharp\Method.template" />
+    <None Include="Generation\Samples\CSharp\Module.template" />
+    <None Include="Generation\Samples\CSharp\Property.template" />
+    <None Include="Generation\Samples\CSharp\Struct.template" />
+    <None Include="Generation\Samples\SQL\Class.Create.template" />
+    <None Include="Generation\Samples\SQL\MySql\Create Table\Class.template" />
+    <None Include="Generation\Samples\SQL\MySql\Create Table\Field.template" />
+    <None Include="Generation\Samples\SQL\MySql\Create Table\Property.template" />
+    <None Include="Generation\Samples\SQL\MySql\Create Table\Struct.template" />
+    <None Include="Generation\Samples\SQL\Property.Create.template" />
+    <None Include="Generation\Samples\SQL\System.Boolean.template" />
+    <None Include="Generation\Samples\SQL\System.DateTime.template" />
+    <None Include="Generation\Samples\SQL\System.Int32.template" />
+    <None Include="Generation\Samples\SQL\System.String.template" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Templates\Samples\ASP.NET WebForms\" />
+    <Folder Include="Generation\Samples\ASP.NET WebForms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

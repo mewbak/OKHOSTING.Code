@@ -9,13 +9,11 @@ namespace OKHOSTING.Code
 	public class Event : Member
 	{
 		[Required]
-		public virtual Delegate Delegate
+		public Delegate Delegate
 		{
 			get; set;
 			//TODO: set { ReturnType = value.InvokeMethod.ReturnType; }
 		}
-
-		public System.Guid? DelegateId { get; set; }
 
 		public override MemberTypes MemberType
 		{

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OKHOSTING.Code.Templates
+namespace OKHOSTING.Code.Generation
 {
 	[Table("GenericMemberTemplate")]
 	public class GenericMemberTemplate : Template
@@ -19,12 +19,10 @@ namespace OKHOSTING.Code.Templates
 		/// If ReturnTypeFilter is set, this template will only be used for members that have this specific ReturnType
 		/// Otherwise, the template will be used as a general template for all members
 		/// </summary>
-		public virtual Type ReturnType
+		public Type ReturnType
 		{
 			get; set;
 		}
-
-		public System.Guid? ReturnTypeId { get; set; }
 
 		public override string FullName
 		{

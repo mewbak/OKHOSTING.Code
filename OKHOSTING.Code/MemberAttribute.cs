@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
-using OKHOSTING.Code.Templates;
+using OKHOSTING.Code.Generation;
 
 namespace OKHOSTING.Code
 {
@@ -17,20 +17,16 @@ namespace OKHOSTING.Code
 		}
 
 		[Required]
-		public virtual RunTime.Instance Attribute
+		public RunTime.Instance Attribute
 		{
 			get; set;
 		}
-
-		public System.Guid? AttributeId { get; set; }
 
 		[Required]
-		public virtual Member AppliedTo
+		public Member AppliedTo
 		{
 			get; set;
 		}
-
-		public System.Guid? AppliedToId { get; set; }
 
 		public MemberAttribute()
 		{
