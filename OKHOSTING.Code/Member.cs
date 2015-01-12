@@ -60,9 +60,7 @@ namespace OKHOSTING.Code
 			get; set;
 		}
 
-		//read only 
-
-		public string FullName
+		public virtual string FullName
 		{
 			get
 			{

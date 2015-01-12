@@ -40,7 +40,7 @@ namespace OKHOSTING.Code.Generation
 			get; set;
 		}
 
-		public string FullName
+		public virtual string FullName
 		{
 			get
 			{
