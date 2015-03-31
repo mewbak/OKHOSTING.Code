@@ -70,29 +70,29 @@ namespace OKHOSTING.Code
 		{
 			StringWriter writer = new StringWriter();
 			writer.WriteLine("To Convert");
-			/*foreach (InstructionBlock block in cfg.Blocks)
-			{
-				writer.WriteLine("block {0}:", block.Index);
-				writer.WriteLine("\tbody:");
-				foreach (Instruction instruction in block)
-				{
-					writer.Write("\t\t");
-					InstructionData data = cfg.GetData(instruction);
-					writer.Write("[{0}:{1}] ", data.StackBefore, data.StackAfter);
-					Formatter.WriteInstruction(writer, instruction);
-					writer.WriteLine();
-				}
-				InstructionBlock[] successors = block.Successors;
-				if (successors.Length > 0)
-				{
-					writer.WriteLine("\tsuccessors:");
-					foreach (InstructionBlock block2 in successors)
-					{
-						writer.WriteLine("\t\tblock {0}", block2.Index);
-					}
-				}
-			}*/
-			return writer.ToString();
+            /*foreach (InstructionBlock block in cfg.Blocks)
+            {
+                writer.WriteLine("block {0}:", block.Index);
+                writer.WriteLine("\tbody:");
+                foreach (Instruction instruction in block)
+                {
+                    writer.Write("\t\t");
+                    InstructionData data = cfg.GetData(instruction);
+                    writer.Write("[{0}:{1}] ", data.StackBefore, data.StackAfter);
+                    Formatter.WriteInstruction(writer, instruction);
+                    writer.WriteLine();
+                }
+                InstructionBlock[] successors = block.Successors;
+                if (successors.Length > 0)
+                {
+                    writer.WriteLine("\tsuccessors:");
+                    foreach (InstructionBlock block2 in successors)
+                    {
+                        writer.WriteLine("\t\tblock {0}", block2.Index);
+                    }
+                }
+            }*/
+            return writer.ToString();
 		}
 
 		private static string GetIL(MethodDefinition method)
@@ -253,19 +253,72 @@ namespace OKHOSTING.Code
 			DataBase.CloseCurrentDataBase();
 		}
 
+
 		public static void ReverseEngineer(System.Reflection.Assembly assembly)
+		{
+			ReverseEngineer(assembly, null, null, null);
+		}
+
+		public static void ReverseEngineer(System.Reflection.Assembly assembly, List<string> classNameFilter, List<TypeSubClass> typeSubClassFilter, List<MemberTypes> MemberTypesFilter)
 		{
 			var _module = assembly.ManifestModule;
 
 			foreach (System.Type _type in DataBase.GetAllPersistentTypes(assembly))
 			{
-				Type type = ReverseEngineer(_type);
+				//create empty list by default so no members will be reversed engineered at least the type passesd all filters
+				List<MemberTypes> memberTypesRealFilter = new List<MemberTypes>();
+
+				if (classNameFilter != null)
+				{
+					foreach (string className in classNameFilter)
+					{
+						if (_type.FullName.StartsWith(className))
+						{
+							memberTypesRealFilter = MemberTypesFilter;
+							break;
+						}
+					}
+				}
+
+				if (typeSubClassFilter != null)
+				{
+					foreach (TypeSubClass subClass in typeSubClassFilter)
+					{
+						if (_type.GetTypeSubClass() == subClass)
+						{
+							memberTypesRealFilter = MemberTypesFilter;
+							break;
+						}
+					}
+				}
+
+				Type type = ReverseEngineer(_type, memberTypesRealFilter);
 			}
+		}
+
+		public static Type ReverseEngineerComplete(System.Type _type)
+		{
+			return ReverseEngineer(_type, true, new List<MemberTypes>() { MemberTypes.Constructor, MemberTypes.Event, MemberTypes.Field, MemberTypes.Method, MemberTypes.NestedType, MemberTypes.Property });
 		}
 
 		public static Type ReverseEngineer(System.Type _type)
 		{
+			return ReverseEngineer(_type, false, null);
+		}
+
+		public static Type ReverseEngineer(System.Type _type, bool includeAttributes)
+		{
+			return ReverseEngineer(_type, includeAttributes, null);
+		}
+
+		public static Type ReverseEngineer(System.Type _type, bool includeAttributes, List<MemberTypes> memberTypesFilter)
+		{
 			var memberFilters = System.Reflection.BindingFlags.DeclaredOnly | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Instance;
+
+			if (memberTypesFilter == null)
+			{
+				memberTypesFilter = new List<MemberTypes>();
+			}
 
 			//for byref types, just ignore them and use the element type
 			if (_type.IsByRef || _type.IsPointer)
@@ -321,6 +374,7 @@ namespace OKHOSTING.Code
 				type.Module = new Module();
 				type.Module.Name = _type.Module.Name.Replace(".dll", "");
 				type.Module.Version = _type.Module.Assembly.GetName().Version.ToString();
+
 				DataBase.Current.Set<Module>().Add(type.Module);
 			}
 
@@ -354,119 +408,76 @@ namespace OKHOSTING.Code
 				}
 			}
 
-
 			DataBase.Current.SaveChanges();
-
-			//return in this point if this class is not included in the namespces list
-			bool goDeeper = false;
-
-			foreach (string namesp in ClassNameFilter)
-			{
-				if (type.FullName.StartsWith(namesp))
-				{
-					goDeeper = true;
-					break;
-				}
-			}
-
-			if (!goDeeper)
-			{
-				return type;
-			}
 
 			//enum fields
 			if (_type.IsEnum)
 			{
 				//((Enumeration)type).UnderlyingType = ReverseEngineer(Enum.GetUnderlyingType(_type));
 
-				foreach (string _item in Enum.GetNames(_type))
+				if (memberTypesFilter.Contains(MemberTypes.Field))
 				{
-					Field field = new Field();
-					field.Type = type;
-					field.Name = _item.ToString();
-					field.IsLiteral = true;
-					field.LiteralValue = Enum.Parse(_type, _item);
-					
-					DataBase.Current.Set<Field>().Add(field);
+					foreach (string _item in Enum.GetNames(_type))
+					{
+						Field field = new Field();
+						field.Type = type;
+						field.Name = _item.ToString();
+						field.IsLiteral = true;
+						field.LiteralValue = Enum.Parse(_type, _item);
+
+						DataBase.Current.Set<Field>().Add(field);
+					}
 				}
 			}
 			else if (_type.IsClass)
 			{
-				((Class)type).IsAbstract = _type.IsAbstract;
+				((Class) type).IsAbstract = _type.IsAbstract;
 
 				if (_type.BaseType != null)
 				{
-					((Class)type).Parent = (Class)ReverseEngineer(_type.BaseType);
+					((Class) type).Parent = (Class) ReverseEngineer(_type.BaseType);
 				}
 
 				foreach (System.Type _interface in _type.GetImplementedInterfaces())
 				{
-					if (((Class)type).ImplementedInterfaces == null)
+					if (((Class) type).ImplementedInterfaces == null)
 					{
-						((Class)type).ImplementedInterfaces = new System.Collections.Generic.List<Interface>();
+						((Class) type).ImplementedInterfaces = new System.Collections.Generic.List<Interface>();
 					}
 
-					((Class)type).ImplementedInterfaces.ToList<Interface>().Add((Interface)ReverseEngineer(_interface));
+					((Class) type).ImplementedInterfaces.ToList<Interface>().Add((Interface) ReverseEngineer(_interface));
 				}
+			}
+
+			//attributes
+			if (includeAttributes)
+			{
+				ReverseEngineerAttributes(_type);
 			}
 
 			//constructors
-			foreach (System.Reflection.ConstructorInfo _constructor in _type.GetConstructors(memberFilters))
+			if (memberTypesFilter.Contains(MemberTypes.Constructor))
 			{
-				if (_constructor.IsCompilerGenerated())
+				foreach (System.Reflection.ConstructorInfo _constructor in _type.GetConstructors(memberFilters))
 				{
-					continue;
-				}
-
-				Method constructor = new Method();
-
-				//decompile method body
-				if (!_constructor.IsAbstract)
-				{
-					Mono.Cecil.AssemblyDefinition ass = Decompiler.LoadAssembly(_constructor.DeclaringType.Module.Assembly.Location);
-					MethodDefinition md = ass.MainModule.GetType(_constructor.DeclaringType.FullName).Methods.Where(md2 => md2.Name == _constructor.Name).Select(md2 => md2).First();
-					constructor.MethodCode = Decompiler.GetSourceCode(md);
-				}
-
-				constructor.Name = type.Name;
-				constructor.Type = type;
-				constructor.ReturnType = type;
-				constructor.IsStatic = _constructor.IsStatic;
-				constructor.IsAbstract = _constructor.IsAbstract;
-				constructor.IsVirtual = _constructor.IsVirtual;
-				constructor.Access = _constructor.GetAccessModifier();
-			
-				foreach (System.Reflection.ParameterInfo _param in _constructor.GetParameters())
-				{
-					MethodArgument ma = new MethodArgument();
-					ma.Method = constructor;
-					ma.Name = _param.Name;
-					ma.Type = ReverseEngineer(_param.ParameterType);
-
-					DataBase.Current.Set<MethodArgument>().Add(ma);
-				}
-
-				if (_constructor.IsGenericMethod || _constructor.IsGenericMethodDefinition || _constructor.ContainsGenericParameters)
-				{
-					foreach (System.Type _genericArg in _constructor.GetGenericArguments())
+					if (_constructor.IsCompilerGenerated())
 					{
-						MethodGenericArgument genericArg = new MethodGenericArgument();
+						continue;
+					}
 
-						genericArg.ArgumentType = ReverseEngineer(_genericArg);
-						genericArg.Position = _genericArg.GenericParameterPosition;
-						genericArg.AppliedTo = constructor;
+					Method constructor = ReverseEngineer(_constructor);
 
-						DataBase.Current.Set<MethodGenericArgument>().Add(genericArg);
+					DataBase.Current.Set<Method>().Add(constructor);
+
+					if (includeAttributes)
+					{
+						ReverseEngineerAttributes(_constructor);
 					}
 				}
-
-				DataBase.Current.Set<Method>().Add(constructor);
-
-				ReverseEngineerAttributes(constructor, _constructor);
 			}
 
 			//fields -- except for enums
-			if (!(type is Enumeration))
+			if (memberTypesFilter.Contains(MemberTypes.Field) && !(type is Enumeration))
 			{
 				foreach (System.Reflection.FieldInfo _field in _type.GetFields(memberFilters))
 				{
@@ -475,164 +486,155 @@ namespace OKHOSTING.Code
 						continue;
 					}
 
-					Field field = new Field();
-
-					field.Name = _field.Name;
-					field.IsLiteral = _field.IsLiteral;
-					field.IsStatic = _field.IsStatic;
-					field.IsInitOnly = _field.IsInitOnly;
-					field.Access = _field.GetAccessModifier();
-					field.ReturnType = ReverseEngineer(_field.FieldType);
-					field.Type = type;
-					
-					if (field.IsLiteral)
-					{
-						field.LiteralValue = _field.GetRawConstantValue();
-					}
+					Field field = ReverseEngineer(_field);
 
 					DataBase.Current.Set<Field>().Add(field);
-					
-					ReverseEngineerAttributes(field, _field);
+
+					if (includeAttributes)
+					{
+						ReverseEngineerAttributes(_field);
+					}
 				}
 			}
 
 			//properties
-			foreach (System.Reflection.PropertyInfo _property in _type.GetProperties(memberFilters))
+			if (memberTypesFilter.Contains(MemberTypes.Property))
 			{
-				Property property;
-
-				if (_property.IsCompilerGenerated())
+				foreach (System.Reflection.PropertyInfo _property in _type.GetProperties(memberFilters))
 				{
-					continue;
-				}
+					Property property;
 
-				if (_property.PropertyType.Equals(typeof(string)))
-				{
-					property = new StringProperty();
-				}
-				else
-				{
-					property = new Property();
-				}
-
-				if (_property.GetMethod != null)
-				{
-					property.GetMethod = ReverseEngineer(_property.GetMethod);
-				}
-
-				if (_property.SetMethod != null)
-				{
-					property.SetMethod = ReverseEngineer(_property.SetMethod);
-				}
-
-				//reverse engineer attributes manually to see if we can deduce if thios property is required or has a string lenght
-				foreach (System.Attribute att in _property.GetCustomAttributes(false))
-				{
-					System.Type attType = att.GetType();
-
-					//hardcoded for "Required" attribute
-					if (attType.Name.Contains("Required"))
+					if (_property.IsCompilerGenerated())
 					{
-						property.Required = true;
 						continue;
 					}
 
-					//hardcoded for "StringLenght" attribute
-					if ((attType.Name.Contains("Lenght") || attType.Name.Contains("Size")) && property is StringProperty)
+					property = ReverseEngineer(_property);
+
+					DataBase.Current.Set<Property>().Add(property);
+
+					if (includeAttributes)
 					{
-						foreach (System.Reflection.PropertyInfo p in attType.GetProperties())
-						{
-							if (p.Name.Contains("Length") || p.Name.Contains("Size"))
-							{
-								try
-								{
-									((StringProperty)property).MaxLenght = Convert.ToInt32(p.GetValue(att));
-								}
-								catch { }
-
-								break;
-							}
-						}
-
-						continue;
+						ReverseEngineerAttributes(_property);
 					}
 				}
-
-				property.Name = _property.Name;
-				property.Type = type;
-				property.ReturnType = ReverseEngineer(_property.PropertyType);
-				property.Access = _property.GetAccessmodifier();
-
-				DataBase.Current.Set<Property>().Add(property);
-				
-				ReverseEngineerAttributes(property, _property);
 			}
 
 			//methods
-			foreach (System.Reflection.MethodInfo _method in _type.GetMethods(memberFilters))
+			if (memberTypesFilter.Contains(MemberTypes.Property))
 			{
-				if (_method.IsCompilerGenerated())
+				foreach (System.Reflection.MethodInfo _method in _type.GetMethods(memberFilters))
 				{
-					continue;
-				}
+					if (_method.IsCompilerGenerated())
+					{
+						continue;
+					}
 
-				//exclude get and set methods since they are decompiled along with their properties
-				if (_method.Name.StartsWith("get_") || _method.Name.StartsWith("set_"))
-				{
-					continue;
-				}
+					//exclude get and set methods since they are decompiled along with their properties
+					if (_method.Name.StartsWith("get_") || _method.Name.StartsWith("set_"))
+					{
+						continue;
+					}
 
-				Method method = ReverseEngineer(_method);
+					Method method = ReverseEngineer(_method);
+
+					if (includeAttributes)
+					{
+						ReverseEngineerAttributes(_method);
+					}
+				}
 			}
 
 			//events
-			foreach (System.Reflection.EventInfo _event in _type.GetEvents(memberFilters))
+			if (memberTypesFilter.Contains(MemberTypes.Event))
 			{
-				if (_event.IsCompilerGenerated())
+				foreach (System.Reflection.EventInfo _event in _type.GetEvents(memberFilters))
 				{
-					continue;
-				}
+					if (_event.IsCompilerGenerated())
+					{
+						continue;
+					}
 
-				Event even = new Event();
-				even.Name = _event.Name;
-				even.Type = type;
-				even.IsStatic = false; //TODO: HARDCODED
-				even.Access = AccessModifier.Public; //TODO: HARDCODED
-				even.Delegate = (Delegate) ReverseEngineer(_event.EventHandlerType);
-				
-				DataBase.Current.Set<Event>().Add(even);
-			
-				ReverseEngineerAttributes(even, _event);
+					Event even = ReverseEngineer(_event);
+
+					DataBase.Current.Set<Event>().Add(even);
+
+					if (includeAttributes)
+					{
+						ReverseEngineerAttributes(_event);
+					}
+				}
 			}
 
 			//inner types
-			foreach (System.Type _nestedType in _type.GetNestedTypes(memberFilters))
+			if (memberTypesFilter.Contains(MemberTypes.NestedType))
 			{
-				if (_nestedType.IsCompilerGenerated())
+				foreach (System.Type _nestedType in _type.GetNestedTypes(memberFilters))
 				{
-					continue;
+					if (_nestedType.IsCompilerGenerated())
+					{
+						continue;
+					}
+
+					Type nestedType = ReverseEngineer(_nestedType);
+					nestedType.Access = _nestedType.GetAccessModifier();
+					nestedType.Container = (Class)type;
 				}
-
-				Type nestedType = ReverseEngineer(_nestedType);
-				nestedType.Access = _nestedType.GetAccessModifier();
-				nestedType.Container = (Class)type;
 			}
-
-			ReverseEngineerAttributes(type, _type);
 
 			DataBase.Current.SaveChanges();
 
 			return type;
 		}
 
-		public static System.Collections.Generic.List<string> ClassNameFilter{ get; set; } 
+		public static Method ReverseEngineer(System.Reflection.ConstructorInfo _constructor)
+		{
+			Method constructor = new Method();
 
-		
-		#endregion
+			//decompile method body
+			if (!_constructor.IsAbstract)
+			{
+				Mono.Cecil.AssemblyDefinition ass = Decompiler.LoadAssembly(_constructor.DeclaringType.Module.Assembly.Location);
+				MethodDefinition md = ass.MainModule.GetType(_constructor.DeclaringType.FullName).Methods.Where(md2 => md2.Name == _constructor.Name).Select(md2 => md2).First();
+				constructor.MethodCode = Decompiler.GetSourceCode(md);
+			}
 
-		#region Private
+			constructor.Type = constructor.ReturnType = ReverseEngineer(_constructor.DeclaringType);
+			constructor.Name = constructor.Type.Name;
 
-		private static Method ReverseEngineer(System.Reflection.MethodInfo _method)
+			constructor.IsStatic = _constructor.IsStatic;
+			constructor.IsAbstract = _constructor.IsAbstract;
+			constructor.IsVirtual = _constructor.IsVirtual;
+			constructor.Access = _constructor.GetAccessModifier();
+
+			foreach (System.Reflection.ParameterInfo _param in _constructor.GetParameters())
+			{
+				MethodArgument ma = new MethodArgument();
+				ma.Method = constructor;
+				ma.Name = _param.Name;
+				ma.Type = ReverseEngineer(_param.ParameterType);
+
+				DataBase.Current.Set<MethodArgument>().Add(ma);
+			}
+
+			if (_constructor.IsGenericMethod || _constructor.IsGenericMethodDefinition || _constructor.ContainsGenericParameters)
+			{
+				foreach (System.Type _genericArg in _constructor.GetGenericArguments())
+				{
+					MethodGenericArgument genericArg = new MethodGenericArgument();
+
+					genericArg.ArgumentType = ReverseEngineer(_genericArg);
+					genericArg.Position = _genericArg.GenericParameterPosition;
+					genericArg.AppliedTo = constructor;
+
+					DataBase.Current.Set<MethodGenericArgument>().Add(genericArg);
+				}
+			}
+
+			DataBase.Current.Set<Method>().Add(constructor);
+		}
+
+		public static Method ReverseEngineer(System.Reflection.MethodInfo _method)
 		{
 			Method method = new Method();
 
@@ -653,8 +655,6 @@ namespace OKHOSTING.Code
 			method.Access = _method.GetAccessModifier();
 
 			DataBase.Current.Set<Method>().Add(method);
-
-			ReverseEngineerAttributes(method, _method);
 
 			foreach (System.Reflection.ParameterInfo _param in _method.GetParameters())
 			{
@@ -683,10 +683,116 @@ namespace OKHOSTING.Code
 			return method;
 		}
 
+		public static Field ReverseEngineer(System.Reflection.FieldInfo _field)
+		{
+			Field field = new Field();
+
+			field.Name = _field.Name;
+			field.IsLiteral = _field.IsLiteral;
+			field.IsStatic = _field.IsStatic;
+			field.IsInitOnly = _field.IsInitOnly;
+			field.Access = _field.GetAccessModifier();
+			field.ReturnType = ReverseEngineer(_field.FieldType);
+			field.Type = ReverseEngineer(_field.DeclaringType);
+
+			if (field.IsLiteral)
+			{
+				field.LiteralValue = _field.GetRawConstantValue();
+			}
+
+			return field;
+		}
+
+		public static Property ReverseEngineer(System.Reflection.PropertyInfo _property)
+		{
+			Property property;
+
+			property = new Property();
+
+			if (_property.GetMethod != null)
+			{
+				property.GetMethod = ReverseEngineer(_property.GetMethod);
+			}
+
+			if (_property.SetMethod != null)
+			{
+				property.SetMethod = ReverseEngineer(_property.SetMethod);
+			}
+
+			property.Name = _property.Name;
+			property.Type = ReverseEngineer(_property.DeclaringType);
+			property.ReturnType = ReverseEngineer(_property.PropertyType);
+			property.Access = _property.GetAccessmodifier();
+
+			return property;
+		}
+
+		public static Event ReverseEngineer(System.Reflection.EventInfo _event)
+		{
+			Event even = new Event();
+			even.Name = _event.Name;
+			even.Type = type;
+			even.IsStatic = false; //TODO: HARDCODED
+			even.Access = AccessModifier.Public; //TODO: HARDCODED
+			even.Delegate = (Delegate)ReverseEngineer(_event.EventHandlerType);
+
+			return even;
+		}
+
+		public static Member ReverseEngineer(System.Reflection.MemberInfo _member)
+		{
+			if (_member.MemberType == System.Reflection.MemberTypes.Constructor)
+			{
+				return ReverseEngineer((System.Reflection.ConstructorInfo)_member);
+			}
+
+			if (_member.MemberType == System.Reflection.MemberTypes.Method)
+			{
+				return ReverseEngineer((System.Reflection.MethodInfo)_member);
+			}
+
+			if (_member.MemberType == System.Reflection.MemberTypes.Field)
+			{
+				return ReverseEngineer((System.Reflection.FieldInfo) _member);
+			}
+
+			if (_member.MemberType == System.Reflection.MemberTypes.Property)
+			{
+				return ReverseEngineer((System.Reflection.PropertyInfo) _member);
+			}
+
+			if (_member.MemberType == System.Reflection.MemberTypes.Event)
+			{
+				return ReverseEngineer((System.Reflection.EventInfo) _member);
+			}
+			throw new ArgumentOutOfRangeException("_member");
+		}
+
+		/// <summary>
+		/// reverse engineer type attributes, ignore arguments since nthey are too hard to generalize
+		/// </summary>
+		public static List<TypeAttribute> ReverseEngineerAttributes(System.Type _type)
+		{
+			System.Collections.Generic.List<TypeAttribute> attributes = new System.Collections.Generic.List<TypeAttribute>();
+
+			//reverse engineer member attributes, ignore arguments since nthey are too hard to generalize
+			foreach (System.Attribute att in _type.GetCustomAttributes(false))
+			{
+				TypeAttribute ma = new TypeAttribute();
+				ma.AppliedTo = ReverseEngineer(_type);
+				ma.Attribute = new RunTime.Instance();
+				ma.Attribute.Type = ReverseEngineer(att.GetType());
+
+				attributes.Add(ma);
+			}
+
+			return attributes;
+		}
+
 		/// <summary>
 		/// reverse engineer member attributes, ignore arguments since nthey are too hard to generalize
 		/// </summary>
-		private static System.Collections.Generic.List<MemberAttribute> ReverseEngineerAttributes(Member member, System.Reflection.MemberInfo _member)
+		public static List<MemberAttribute> ReverseEngineerAttributes(System.Reflection.MemberInfo _member)
 		{
 			System.Collections.Generic.List<MemberAttribute> attributes = new System.Collections.Generic.List<MemberAttribute>();
 
@@ -694,7 +800,7 @@ namespace OKHOSTING.Code
 			foreach (System.Attribute att in _member.GetCustomAttributes(false))
 			{
 				MemberAttribute ma = new MemberAttribute();
-				ma.AppliedTo = member;
+				ma.AppliedTo = ReverseEngineer(_member);
 				ma.Attribute = new RunTime.Instance();
 				ma.Attribute.Type = ReverseEngineer(att.GetType());
 
@@ -705,32 +811,12 @@ namespace OKHOSTING.Code
 			return attributes;
 		}
 
-		/// <summary>
-		/// reverse engineer type attributes, ignore arguments since nthey are too hard to generalize
-		/// </summary>
-		private static System.Collections.Generic.List<TypeAttribute> ReverseEngineerAttributes(Type type, System.Type _type)
-		{
-			System.Collections.Generic.List<TypeAttribute> attributes = new System.Collections.Generic.List<TypeAttribute>();
-
-			//reverse engineer member attributes, ignore arguments since nthey are too hard to generalize
-			foreach (System.Attribute att in _type.GetCustomAttributes(false))
-			{
-				TypeAttribute ma = new TypeAttribute();
-				ma.AppliedTo = type;
-				ma.Attribute = new RunTime.Instance();
-				ma.Attribute.Type = ReverseEngineer(att.GetType());
-
-				attributes.Add(ma);
-				DataBase.Current.Set<TypeAttribute>().Add(ma);
-			}
-
-			return attributes;
-		}
-
 		#endregion
 	}
 
-	internal static class AccessModifierExtensions
+	#region Extensions
+
+	internal static class DecompilerExtensions
 	{
 		internal static AccessModifier GetAccessModifier(this System.Reflection.ConstructorInfo constructorInfo)
 		{
@@ -799,6 +885,25 @@ namespace OKHOSTING.Code
 			return AccessModifier.Private;
 		}
 
+		internal static TypeSubClass GetTypeSubClass(this System.Type type)
+		{
+			if (type.IsClass)
+				return TypeSubClass.Class;
+			
+			if (type.IsEnum)
+				return TypeSubClass.Enumeration;
+			
+			if (!type.IsInterface)
+				return TypeSubClass.Interface;
+			
+			if (type.IsValueType && !type.IsEnum)
+			{
+				return TypeSubClass.Struct;
+			}
+
+			throw new ArgumentOutOfRangeException("type");
+		}
+
 		internal static string GetName(this System.Type type)
 		{
 			string name = type.Name;
@@ -841,4 +946,6 @@ namespace OKHOSTING.Code
 			return allInterfaces.ToArray();
 		}
 	}
+
+#endregion
 }

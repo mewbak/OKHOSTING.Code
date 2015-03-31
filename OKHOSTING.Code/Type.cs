@@ -45,7 +45,6 @@ namespace OKHOSTING.Code
 		/// <summary>
 		/// Support for subtype definitions
 		/// </summary>
-
 		public Class Container
 		{
 			get; set;

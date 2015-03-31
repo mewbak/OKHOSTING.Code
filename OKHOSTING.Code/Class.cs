@@ -57,7 +57,6 @@ namespace OKHOSTING.Code
 		/// <summary>
 		/// Types defined inside this class
 		/// </summary>
-
 		public List<Type> SubTypes
 		{
 			get; set;
@@ -192,6 +191,33 @@ namespace OKHOSTING.Code
 
 				return IsPublic && PrimaryKey.Count<Property>() > 0;
 			}
+		}
+
+		/// <summary>
+		/// Returns all parent Types ordered from base to child
+		/// </summary>
+		public List<Class> GetBaseClasses()
+		{
+			//Local Vars
+			List<Class> types;
+			Class current;
+
+			//Creating list of Types
+			types = new List<Class>();
+
+			//Get all types in ascendent order (from base to child)
+			current = this;
+			while (current != null)
+			{
+				//Inserting the current object at the first position
+				types.Insert(0, current);
+
+				//Getting the parent of the current object
+				current = current.Parent;
+			}
+
+			//Returning the List of DataTypes			
+			return types;
 		}
 
 		public Class()

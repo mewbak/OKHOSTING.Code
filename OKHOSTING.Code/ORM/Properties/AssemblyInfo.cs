@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OKHOSTING.Code")]
+[assembly: AssemblyTitle("OKHOSTING.Code.ORM")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OKHOSTING.Code")]
+[assembly: AssemblyProduct("OKHOSTING.Code.ORM")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6b0f8c68-830e-45f7-ade1-3d14d58cc8da")]
+[assembly: Guid("51214780-1380-47e6-963a-2acecf7034ae")]
 
 // Version information for an assembly consists of the following four values:
 //
