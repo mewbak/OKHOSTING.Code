@@ -1,7 +1,0 @@
-<<if(!Method.IsPropertyMethod)>>
-<<Method.Attributes: { att | [<<att.Attribute.Type.NameResult>>] }>>
-<<Method.Access>><<if(Method.IsStatic)>> static<<endif>><<if(Method.IsAbstract)>> abstract<<endif>><<if(Method.IsVirtual)>> virtual<<endif>><<if(!Method.IsConstructor)>> <<Method.ReturnType.NameResult>><<endif>> <<Method.NameResult>><<if(Method.IsGeneric)>> < <<Method.GenericArguments: { genArg | <<genArg.ArgumentType.NameResult>> };separator=", ">> > <<endif>>(<<Method.Arguments: { arg | <<arg.Type.NameResult>> <<arg.Name>> };separator=", ">>)
-{
-	<<Method.MethodBodyCode>>
-}
-<<endif>> 

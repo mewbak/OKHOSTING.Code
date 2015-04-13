@@ -1,8 +1,0 @@
-namespace <<Enumeration.NameSpace>>
-{
-	<<Enumeration.Access>> enum <<Enumeration.Name>><<if(Enumeration.UnderlyingType)>> : <<Enumeration.UnderlyingType.NameResult>> <<endif>>
-	{
-		<<Enumeration.Fields: { field 
-		|<<field.NameResult>><<if(field.LiteralValue)>> = <<field.LiteralValue>> <<endif>>}; separator=",\n">>
-	}
-}

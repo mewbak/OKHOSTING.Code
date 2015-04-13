@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace OKHOSTING.Code
 {
@@ -207,42 +207,9 @@ namespace OKHOSTING.Code
 		}
 
 		#endregion
-
-		#region constructors
 		
 		public Type()
 		{
 		}
-
-		#endregion
-
-		#region static 
-
-		//public static System.Collections.Generic.List<BaseObject> GetSetupObjects()
-		//{
-		//	//if users already exist in database, return null
-		//	if (Objects<Type>().Count > 0) return null;
-
-		//	List<BaseObject> data = new System.Collections.Generic.List<BaseObject>();
-
-		//	Module mscorlib = new Module();
-		//	mscorlib.Name = typeof(System.String).Module.Name;
-		//	mscorlib.Version = typeof(System.String).Assembly.GetName().Version.ToString();
-		//	mscorlib.Location = typeof(System.String).Assembly.Location;
-		//	data.Add(mscorlib);
-
-		//	foreach(TypeCode tc in Enum.GetValues(typeof(TypeCode)))
-		//	{
-		//		Struct st = new Struct();
-		//		st.Name = tc.ToString();
-		//		st.NameSpace = "System";
-		//		st.Module = mscorlib;
-		//		data.Add(st);
-		//	}
-
-		//	return data;
-		//}
-
-		#endregion
 	}
 }

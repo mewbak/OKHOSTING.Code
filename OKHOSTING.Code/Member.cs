@@ -10,7 +10,7 @@ namespace OKHOSTING.Code
 	[DefaultProperty("Name")]
 	public abstract class Member
 	{
-		#region members
+		#region Members
 
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid Id
@@ -93,7 +93,7 @@ namespace OKHOSTING.Code
 
 		#endregion
 
-		#region collections
+		#region Collections
 
 		public List<MemberAttribute> Attributes
 		{
@@ -102,7 +102,7 @@ namespace OKHOSTING.Code
 
 		#endregion
 
-		#region constructors
+		#region Constructors
 
 		public Member()
 		{

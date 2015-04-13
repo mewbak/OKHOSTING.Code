@@ -48,7 +48,6 @@ namespace OKHOSTING.Code
 		/// <summary>
 		/// Classes that inherit from this class
 		/// </summary>
-
 		public List<Class> ParentOf
 		{
 			get; set;
