@@ -2,8 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
-using OKHOSTING.Code.Generation;
-
 namespace OKHOSTING.Code
 {
 	[System.ComponentModel.DefaultProperty("Name")]

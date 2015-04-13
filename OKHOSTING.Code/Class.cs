@@ -100,17 +100,6 @@ namespace OKHOSTING.Code
 			}
 		}
 
-		public IQueryable<Property> ForeignKeys
-		{
-			get
-			{
-				return from m in Members.AsQueryable()
-					   where m is Property && m.ReturnType is Class && m.ReturnType.Name != "System.String"
-					   orderby m.Name
-					   select (Property)m;
-			}
-		}
-
 		public IQueryable<Method> Methods
 		{
 			get
@@ -152,44 +141,6 @@ namespace OKHOSTING.Code
 					   where m is Event
 					   orderby m.Name
 					   select (Event)m;
-			}
-		}
-
-		public IQueryable<Property> PrimaryKey
-		{
-			get
-			{
-				return from p in Properties.AsQueryable()
-					   where p.Key
-					   orderby p.Name
-					   select p;
-			}
-		}
-
-		public IQueryable<Property> ExternalForeignKeys
-		{
-			get 
-			{
-				//return new System.Collections.Generic.List<Property>(Session, new BinaryOperator("ReturnType", this));
-				return from p in DataBase.Current.Set<Property>() where p.ReturnType == this select p;
-			}
-		}
-
-		public bool IsPersistent
-		{
-			get
-			{
-				//reverse engineer attributes manually to see if we can deduce if thios property is required or has a string lenght
-				foreach (TypeAttribute att in this.Attributes)
-				{
-					//hardcoded for "Required" attribute
-					if (att.Attribute.Type.Name.Contains("NonPersistent") || att.Attribute.Type.Name.Contains("NotMapped"))
-					{
-						return false;
-					}
-				}
-
-				return IsPublic && PrimaryKey.Count<Property>() > 0;
 			}
 		}
 

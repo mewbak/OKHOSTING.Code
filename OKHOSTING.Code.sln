@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKHOSTING.Code", "OKHOSTING.Code\OKHOSTING.Code.csproj", "{CE51C890-6B6F-45DA-9146-1F9CF897F00E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKHOSTING.Tools", "..\OKHOSTING.Tools\OKHOSTING.Tools.csproj", "{FC1B2D37-6A08-4FCE-AAF7-73512262A9D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKHOSTING.Data", "..\OKHOSTING.Data\OKHOSTING.Data\OKHOSTING.Data.csproj", "{92920DC2-B334-4616-9BBC-883EDED14E44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKHOSTING.Code.Generation", "..\OKHOSTING.Code.Generation\OKHOSTING.Code.Generation.csproj", "{1867EA3E-E253-4DF6-9254-BD86852EF952}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,10 @@ Global
 		{92920DC2-B334-4616-9BBC-883EDED14E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92920DC2-B334-4616-9BBC-883EDED14E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92920DC2-B334-4616-9BBC-883EDED14E44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1867EA3E-E253-4DF6-9254-BD86852EF952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1867EA3E-E253-4DF6-9254-BD86852EF952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1867EA3E-E253-4DF6-9254-BD86852EF952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1867EA3E-E253-4DF6-9254-BD86852EF952}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

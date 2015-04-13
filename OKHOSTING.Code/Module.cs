@@ -1,5 +1,4 @@
-﻿using OKHOSTING.Code.Generation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace OKHOSTING.Code
 {
 	[System.ComponentModel.DefaultProperty("Name")]
-	public class Module: ITemplatable
+	public class Module
 	{
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public Guid Id
@@ -57,49 +56,6 @@ namespace OKHOSTING.Code
 		{
 			get; set;
 		}
-
-		public List<SpecificModuleTemplate> SpecificModuleTemplates
-		{
-			get; set;
-		}
-
-		#region ITemplatable
-
-		[System.ComponentModel.Browsable(false)]
-		public string NameResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderName(this);
-			}
-		}
-
-		[System.ComponentModel.Browsable(false)]
-		public string ContentResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderContent(this);
-			}
-		}
-
-		[System.ComponentModel.Browsable(false)]
-		public string FilePathResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderFilePath(this);
-			}
-		}
-
-		[System.ComponentModel.Browsable(false)]
-		[NotMapped]
-		public Language ActiveLanguage
-		{
-			get; set;
-		}
-
-		#endregion
 
 		public Module()
 		{

@@ -1,5 +1,4 @@
-﻿using OKHOSTING.Code.Generation;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +11,7 @@ namespace OKHOSTING.Code
 	/// Base type for classes and enumerations
 	/// </summary>
 	[System.ComponentModel.DefaultProperty("FullName")]
-	public abstract class Type: ITemplatable
+	public abstract class Type
 	{
 		#region members
 
@@ -167,7 +166,8 @@ namespace OKHOSTING.Code
 				if (IsArray)
 				{
 					string name = FullName.TrimEnd('[', ' ', ',', ']');
-					return (from t in DataBase.Current.Set<Type>() where t.FullName == name select t).SingleOrDefault<Type>();
+					//return (from t in DataBase.Current.Set<Type>() where t.FullName == name select t).SingleOrDefault<Type>();
+					return null;
 				}
 				else if (IsGeneric)
 				{
@@ -204,63 +204,6 @@ namespace OKHOSTING.Code
 		public List<TypeGenericArgument> GenericArguments
 		{
 			get; set; //TODO: sort by position
-		}
-
-		public List<SpecificTypeTemplate> SpecificTypeTemplates
-		{
-			get; set;
-		}
-
-		#endregion
-
-		#region ITemplatable
-
-		[System.ComponentModel.Browsable(false)]
-		public string NameResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderName(this);
-			}
-		}
-
-		[System.ComponentModel.Browsable(false)]
-		public string ContentResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderContent(this);
-			}
-		}
-
-		[System.ComponentModel.Browsable(false)]
-		public string FilePathResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderFilePath(this);
-			}
-		}
-
-		private Language _ActiveLanguage = null;
-
-		[System.ComponentModel.Browsable(false)]
-		[NotMapped]
-		public Language ActiveLanguage
-		{
-			get
-			{
-				if (_ActiveLanguage == null && ((ITemplatable)this.Module).ActiveLanguage != null)
-				{
-					return ((ITemplatable)this.Module).ActiveLanguage;
-				}
-
-				return _ActiveLanguage;
-			}
-			set
-			{
-				_ActiveLanguage = value;
-			}
 		}
 
 		#endregion

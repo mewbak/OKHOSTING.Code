@@ -1,5 +1,4 @@
-﻿using OKHOSTING.Code.Generation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +8,7 @@ using System.Text;
 namespace OKHOSTING.Code
 {
 	[DefaultProperty("Name")]
-	public abstract class Member : ITemplatable
+	public abstract class Member
 	{
 		#region members
 
@@ -99,63 +98,6 @@ namespace OKHOSTING.Code
 		public List<MemberAttribute> Attributes
 		{
 			get; set;
-		}
-
-		public List<SpecificMemberTemplate> SpecificMemberTemplates
-		{
-			get; set;
-		}
-
-		#endregion
-
-		#region itemplatable
-
-		[Browsable(false)]
-		public string NameResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderName(this);
-			}
-		}
-
-		[Browsable(false)]
-		public string ContentResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderContent(this);
-			}
-		}
-
-		[Browsable(false)]
-		public string FilePathResult
-		{
-			get
-			{
-				return ((ITemplatable)this).ActiveLanguage.RenderFilePath(this);
-			}
-		}
-
-		private Language _ActiveLanguage = null;
-
-		[NotMapped]
-		[Browsable(false)]
-		public Language ActiveLanguage
-		{
-			get
-			{
-				if (_ActiveLanguage == null && ((ITemplatable)this.Type).ActiveLanguage != null)
-				{
-					return ((ITemplatable)this.Type).ActiveLanguage;
-				}
-
-				return _ActiveLanguage;
-			}
-			set
-			{
-				_ActiveLanguage = value;
-			}
 		}
 
 		#endregion
