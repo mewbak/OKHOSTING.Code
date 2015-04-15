@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr4.StringTemplate">
-      <HintPath>..\packages\Antlr4.StringTemplate.4.0.6.9004\lib\net35\Antlr4.StringTemplate.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.Decompiler">
       <HintPath>..\References\ICSharpCode.Decompiler.dll</HintPath>
     </Reference>
